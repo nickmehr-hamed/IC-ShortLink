@@ -1,29 +1,19 @@
-﻿namespace ShortLink.Persistence
+﻿namespace ShortLink.Persistence;
+
+public class QueryUnitOfWork : IcFramework.Persistence.QueryUnitOfWork<QueryDatabaseContext>, IQueryUnitOfWork
 {
-    public class QueryUnitOfWork :
-        Dtx.Persistence.QueryUnitOfWork<QueryDatabaseContext>, IQueryUnitOfWork
+    public QueryUnitOfWork(IcFramework.Persistence.Options options) : base(options: options)
     {
-        public QueryUnitOfWork
-            (Dtx.Persistence.Options options) : base(options: options)
+    }
+
+    private Logs.Repositories.ILogQueryRepository _logs;
+
+    public Logs.Repositories.ILogQueryRepository Logs
+    {
+        get
         {
+            _logs = _logs ?? new Logs.Repositories.ILogQueryRepository(DatabaseContext);
+            return _logs;
         }
-
-        // **************************************************
-        private Logs.Repositories.ILogQueryRepository _logs;
-
-        public Logs.Repositories.ILogQueryRepository Logs
-        {
-            get
-            {
-                if (_logs == null)
-                {
-                    _logs =
-                        new Logs.Repositories.LogQueryRepository(databaseContext: DatabaseContext);
-                }
-
-                return _logs;
-            }
-        }
-        // **************************************************
     }
 }

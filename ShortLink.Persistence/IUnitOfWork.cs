@@ -1,7 +1,6 @@
-﻿namespace ShortLink.Persistence
+﻿namespace ShortLink.Persistence;
+
+public interface IUnitOfWork : IcFramework.Persistence.IUnitOfWork
 {
-    public interface IUnitOfWork : Dtx.Persistence.IUnitOfWork
-    {
-        public Logs.Repositories.ILogRepository Logs { get; }
-    }
+    public Logs.Repositories.ILogRepository Logs { get; }
 }

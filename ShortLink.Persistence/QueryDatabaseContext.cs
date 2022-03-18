@@ -1,22 +1,14 @@
-﻿namespace ShortLink.Persistence
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace ShortLink.Persistence;
+
+public class QueryDatabaseContext : DbContext
 {
-    public class QueryDatabaseContext : Microsoft.EntityFrameworkCore.DbContext
-    {
-        public QueryDatabaseContext
-            (Microsoft.EntityFrameworkCore.DbContextOptions<QueryDatabaseContext> options) : base(options: options)
-        {
-            // TODO
-            Database.EnsureCreated();
-        }
+    public QueryDatabaseContext(DbContextOptions<QueryDatabaseContext> options) : base(options: options) => Database.EnsureCreated();
 
-        // **********
-        public Microsoft.EntityFrameworkCore.DbSet<Domain.Models.Log> Logs { get; set; }
-        // **********
+    public DbSet<Domain.Models.Owner> Owners { get; set; }
+    public DbSet<Domain.Models.Link> Links { get; set; }
+    public DbSet<Domain.Models.UsageLog> UsageLogs { get; set; }
 
-        protected override void OnModelCreating
-            (Microsoft.EntityFrameworkCore.ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-        }
-    }
+    protected override void OnModelCreating(ModelBuilder modelBuilder) => base.OnModelCreating(modelBuilder);
 }
