@@ -1,10 +1,10 @@
 ﻿namespace ShortLink.Persistence
 {
     public class UnitOfWork :
-        Dtx.Persistence.UnitOfWork<DatabaseContext>, IUnitOfWork
+        IcFramework.Persistence.UnitOfWork<DatabaseContext>, IUnitOfWork
     {
         public UnitOfWork
-            (Dtx.Persistence.Options options) : base(options: options)
+            (IcFramework.Persistence.Options options) : base(options: options)
         {
         }
 
