@@ -6,14 +6,14 @@ public class UnitOfWork : IcFramework.Persistence.UnitOfWork<DatabaseContext>, I
     {
     }
 
-    private Logs.Repositories.ILogRepository _logs;
+    private Links.Repositories.ILinkRepository _links;
 
-    public Logs.Repositories.ILogRepository Logs
+    public Links.Repositories.ILinkRepository Links
     {
         get
         {
-            _logs = _logs ?? new Logs.Repositories.ILogQueryRepository(DatabaseContext);
-            return _logs;
+            _links = _links ?? new Links.Repositories.LinkRepository(DatabaseContext);
+            return _links;
         }
     }
 }

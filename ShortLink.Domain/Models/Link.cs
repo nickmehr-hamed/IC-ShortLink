@@ -17,5 +17,5 @@ public class Link : Base.Entity
 
     [Required]
     [MaxLength(length: 10)]
-    public string  Tocken { get; set; }
+    public string Key { get; set; }
 }

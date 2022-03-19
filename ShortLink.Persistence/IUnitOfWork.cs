@@ -2,5 +2,5 @@
 
 public interface IUnitOfWork : IcFramework.Persistence.IUnitOfWork
 {
-    public Logs.Repositories.ILogRepository Logs { get; }
+    public Links.Repositories.ILinkRepository Links { get; }
 }

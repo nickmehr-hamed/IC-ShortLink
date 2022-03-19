@@ -2,5 +2,5 @@
 
 public interface IQueryUnitOfWork : IcFramework.Persistence.IQueryUnitOfWork
 {
-    public Logs.Repositories.ILogQueryRepository Logs { get; }
+    public Links.Repositories.ILinkQueryRepository Links { get; }
 }

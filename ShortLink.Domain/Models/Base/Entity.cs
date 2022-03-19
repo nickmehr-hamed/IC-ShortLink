@@ -1,9 +1,8 @@
 ﻿using IcFramework.Domain;
 
-namespace ShortLink.Domain.Models.Base
+namespace ShortLink.Domain.Models.Base;
+
+public abstract class Entity : IEntity
 {
-    public abstract class Entity : IEntity
-    {
-        long IEntity.Id { get; set; }
-    }
+    public long Id { get; set; }
 }
