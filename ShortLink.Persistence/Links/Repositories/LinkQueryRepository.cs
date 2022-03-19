@@ -8,18 +8,18 @@ public class LinkQueryRepository : IcFramework.Persistence.QueryRepository<Domai
     {
     }
 
-    public GetLinksQueryResponseViewModel? GetLinkByKey(string key)
+    public GetLinkByKeyQueryResponseViewModel? GetLinkByKey(string key)
     {
-        Domain.Models.Link? link = DbSet.FirstOrDefault(current => current.Key == key);
-        GetLinksQueryResponseViewModel? result = link == null ? null : new GetLinksQueryResponseViewModel
+        Domain.Models.Link? link = DbSet.FirstOrDefault(current => current.ShortKey == key);
+        GetLinkByKeyQueryResponseViewModel? result = link == null ? null : new ()
         {
             Id = link.Id,
             Title = link.Title,
             Url = link.Url,
-            Key = link.Key
+            ShortKey = link.ShortKey
         };
         return result;
     }
 
-    public async Task<GetLinksQueryResponseViewModel?> GetLinkByKeyAsync(string key) => await Task.Run(() => GetLinkByKey(key));
+    public async Task<GetLinkByKeyQueryResponseViewModel?> GetLinkByKeyAsync(string key) => await Task.Run(() => GetLinkByKey(key));
 }

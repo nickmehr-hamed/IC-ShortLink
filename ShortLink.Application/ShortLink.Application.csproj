@@ -6,4 +6,16 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="FluentResults" Version="3.2.0" />
+    <PackageReference Include="FluentValidation" Version="10.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ShortLink.Domain\ShortLink.Domain.csproj" />
+    <ProjectReference Include="..\ShortLink.Persistence\ShortLink.Persistence.csproj" />
+    <ProjectReference Include="..\ShortLink.Resources\ShortLink.Resources.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -2,6 +2,6 @@
 
 public interface ILinkQueryRepository : IcFramework.Persistence.IQueryRepository<Domain.Models.Link>
 {
-    Task<ViewModels.GetLinksQueryResponseViewModel?> GetLinkByKeyAsync(string key);
-    ViewModels.GetLinksQueryResponseViewModel? GetLinkByKey(string key);
+    Task<ViewModels.GetLinkByKeyQueryResponseViewModel?> GetLinkByKeyAsync(string key);
+    ViewModels.GetLinkByKeyQueryResponseViewModel? GetLinkByKey(string key);
 }
