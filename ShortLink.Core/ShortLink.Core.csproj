@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\IcFramework\IcFramework.csproj" />
     <ProjectReference Include="..\ShortLink.Application\ShortLink.Application.csproj" />
+    <ProjectReference Include="..\ShortLink.Persistence\ShortLink.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

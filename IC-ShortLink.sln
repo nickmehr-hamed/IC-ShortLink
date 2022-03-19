@@ -14,33 +14,33 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ShortLink", "ShortLink", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{6D9C5AA7-1983-4532-993B-C877EA94AED3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShortLink.Api", "ShortLink.Api\ShortLink.Api.csproj", "{EC370ED3-A6D4-42E6-B1BD-A41019ED2BA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShortLink.Api", "ShortLink.Api\ShortLink.Api.csproj", "{EC370ED3-A6D4-42E6-B1BD-A41019ED2BA3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{3E913F45-E2FB-4FDD-B6DA-843807110F66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShortLink.Application", "ShortLink.Application\ShortLink.Application.csproj", "{3BC91267-815C-4591-89C8-DE091E84EDC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShortLink.Application", "ShortLink.Application\ShortLink.Application.csproj", "{3BC91267-815C-4591-89C8-DE091E84EDC7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{40EA054B-EF12-4484-8EB3-E0BE91359F21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShortLink.Core", "ShortLink.Core\ShortLink.Core.csproj", "{1B0B2095-8E11-4710-AECD-11A774331613}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShortLink.Core", "ShortLink.Core\ShortLink.Core.csproj", "{1B0B2095-8E11-4710-AECD-11A774331613}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{CCA1B493-E98F-479C-BAA5-B35E60D3D32D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShortLink.Domain", "ShortLink.Domain\ShortLink.Domain.csproj", "{4F04505F-E749-4EE5-8CFF-EAE282FF56ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShortLink.Domain", "ShortLink.Domain\ShortLink.Domain.csproj", "{4F04505F-E749-4EE5-8CFF-EAE282FF56ED}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Persistence", "Persistence", "{8F82731C-6746-4FF5-A5D4-05DB8A368CE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShortLink.Persistence", "ShortLink.Persistence\ShortLink.Persistence.csproj", "{AFFCC8B5-EF83-426F-A9C8-1DE70DE7C634}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShortLink.Persistence", "ShortLink.Persistence\ShortLink.Persistence.csproj", "{AFFCC8B5-EF83-426F-A9C8-1DE70DE7C634}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{DE4CF71D-7F73-4ECD-8C70-34562B765967}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShortLink.Resources", "ShortLink.Resources\ShortLink.Resources.csproj", "{E9631D72-31B5-4E55-8E40-994F3038865B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShortLink.Resources", "ShortLink.Resources\ShortLink.Resources.csproj", "{E9631D72-31B5-4E55-8E40-994F3038865B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IcFramework", "IcFramework\IcFramework.csproj", "{CFB8CEA8-F412-4CB3-82B9-1CD87DADAA43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IcFramework", "IcFramework\IcFramework.csproj", "{CFB8CEA8-F412-4CB3-82B9-1CD87DADAA43}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{10139E26-5120-479B-8087-41967412AF44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShortLink.Web", "ShortLink.Web\ShortLink.Web.csproj", "{5552AD9E-492F-4AB2-95FD-6B5A66F7C745}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShortLink.Web", "ShortLink.Web\ShortLink.Web.csproj", "{5552AD9E-492F-4AB2-95FD-6B5A66F7C745}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
