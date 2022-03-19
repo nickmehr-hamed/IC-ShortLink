@@ -70,7 +70,7 @@ namespace ShortLink.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of {PropertyName} must be Exactly {ExactLength}!.
+        ///   Looks up a localized string similar to The length of {PropertyName} must be Exactly {MaxLength}!.
         /// </summary>
         public static string ErrorLengthFluent {
             get {

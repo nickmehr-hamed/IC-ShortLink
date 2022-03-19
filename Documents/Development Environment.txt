@@ -1,0 +1,12 @@
+Development Environment will Be:
+Platform: Microsoft .net 6
+Programming Language: C#
+Database: Sql Server
+Architucture: Microservices
+Mediator: MediatR
+ORM: EF for .net Core
+Mapper: AutoMapper
+Logging: NLog
+Pattern: CQRS
+Validation: FluentValidation
+Response Standard: FluentResult

@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{49A6A930-B633-4B82-A962-AA1AEEAC9221}"
 	ProjectSection(SolutionItems) = preProject
+		Documents\Database Diagram.png = Documents\Database Diagram.png
+		Documents\Development Environment.txt = Documents\Development Environment.txt
 		Documents\Project Description.docx = Documents\Project Description.docx
 	EndProjectSection
 EndProject

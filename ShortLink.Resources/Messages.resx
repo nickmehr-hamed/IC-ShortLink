@@ -121,7 +121,7 @@
     <value>The minimum value of {PropertyName} must be greater than {ComparisonValue}!</value>
   </data>
   <data name="ErrorLengthFluent" xml:space="preserve">
-    <value>The length of {PropertyName} must be Exactly {ExactLength}!</value>
+    <value>The length of {PropertyName} must be Exactly {MaxLength}!</value>
   </data>
   <data name="ErrorLessThanFluent" xml:space="preserve">
     <value>The maximum value of {PropertyName} must be less than {ComparisonValue}!</value>
