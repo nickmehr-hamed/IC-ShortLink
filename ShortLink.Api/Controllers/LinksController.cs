@@ -26,7 +26,7 @@ public class LinksController : Infrastructure.ControllerBase
 
     #region Get (Get A ShortLink Url and Title By Short Key)
     /// <summary>
-    /// gets ShortKey and fetch the Url info, it returns Url, Title as result
+    /// gets ShortKey and fetch the Url info, it returns Url, Title as result 
     /// </summary>
     [HttpGet(template: "{key}")]
     [ProducesResponseType(type: typeof(FluentResults.Result<Persistence.Links.ViewModels.GetLinkByKeyQueryResponseViewModel>), statusCode: StatusCodes.Status200OK)]
