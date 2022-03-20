@@ -1,77 +1,51 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Collections;
+using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
+using System.Text;
 
 namespace IcFramework.Logging;
 
 public abstract class Logger<T> : object, ILogger<T> where T : class
 {
-    protected Logger(IHttpContextAccessor httpContextAccessor = null) : base() => HttpContextAccessor = httpContextAccessor;
+    protected Logger(IHttpContextAccessor? httpContextAccessor = null) : base() => HttpContextAccessor = httpContextAccessor;
 
-    protected IHttpContextAccessor HttpContextAccessor { get; set; }
+    protected IHttpContextAccessor? HttpContextAccessor { get; set; }
 
     #region GetExceptions(System.Exception exception)
-    //TODO: refactor
-    protected virtual string GetExceptions(Exception exception)
+    protected virtual string GetExceptions(in Exception? exception)
     {
-        System.Text.StringBuilder result = new System.Text.StringBuilder();
-        Exception currentException = exception;
-        int index = 0;
-
+        StringBuilder result = new();
+        Exception? currentException = exception;
+        string tag = nameof(Exception);
         while (currentException != null)
         {
-            if (index == 0)
-                result.Append($"<{ nameof(Exception) }>");
-            else
-                result.Append($"<{ nameof(Exception.InnerException) }>");
-
-            result.Append(currentException.Message);
-
-            if (index == 0)
-                result.Append($"</{ nameof(Exception) }>");
-            else
-                result.Append($"</{ nameof(Exception.InnerException) }>");
-            index++;
-
+            result.Append($"<{ tag }>{currentException.Message}</{ tag }>");
+            tag = nameof(Exception.InnerException);
             currentException = currentException.InnerException;
         }
-
         return result.ToString();
     }
     #endregion /GetExceptions(System.Exception exception)
 
     #region protected virtual string GetParameters(System.Collections.Hashtable parameters)
-    //TODO: refactor
-    protected virtual string GetParameters(System.Collections.Hashtable parameters)
+    protected virtual string? GetParameters(in Hashtable? parameters)
     {
-        if (parameters == null || parameters.Count == 0)
+        if (parameters?.Count is null or 0)
             return null;
 
-        System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-
-        foreach (System.Collections.DictionaryEntry item in parameters)
-        {
-            if (item.Key != null)
-            {
-                stringBuilder.Append("<parameter>");
-                stringBuilder.Append($"<key>{ item.Key }</key>");
-                if (item.Value == null)
-                    stringBuilder.Append($"<value>NULL</value>");
-                else
-                    stringBuilder.Append($"<value>{ item.Value }</value>");
-                stringBuilder.Append("</parameter>");
-            }
-        }
-        string result = stringBuilder.ToString();
+        string? result = parameters.Cast<DictionaryEntry>().Where(item => item.Key is not null)
+            .Aggregate(new StringBuilder(),
+            (builder, item) => builder.Append($"<parameter><key>{ item.Key }</key><value>{ item.Value ?? "NULL" }</value></parameter>"))
+            .ToString();
         return result;
     }
     #endregion /protected virtual string GetParameters(System.Collections.Hashtable parameters)
 
-    //TODO: refactor
-    protected void Log(LogLevel level, MethodBase methodBase, string message, Exception exception = null, Hashtable parameters = null)
+    protected void Log(LogLevel level, MethodBase? methodBase, string? message, Exception? exception = null, Hashtable? parameters = null)
     {
-        if (exception == null && string.IsNullOrWhiteSpace(message))
+        if (exception is null && string.IsNullOrWhiteSpace(message))
             return;
 
         string currentCultureName = Thread.CurrentThread.CurrentCulture.Name;
@@ -79,76 +53,38 @@ public abstract class Logger<T> : object, ILogger<T> where T : class
         CultureInfo currentCultureInfo = new CultureInfo(currentCultureName);
         Thread.CurrentThread.CurrentCulture = newCultureInfo;
 
-        Log log = new Log
+        Log log = new()
         {
             Level = level,
             ClassName = typeof(T).Name,
-            MethodName = methodBase.Name,
-            Namespace = typeof(T).Namespace
+            MethodName = methodBase?.Name,
+            Namespace = typeof(T).Namespace,
+            Message = message,
+            Exceptions = GetExceptions(exception),
+            Parameters = GetParameters(parameters),
+            Username = HttpContextAccessor?.HttpContext?.User?.Identity?.Name,
+            RemoteIP = HttpContextAccessor?.HttpContext?.Connection?.RemoteIpAddress?.ToString(),
+            RequestPath = HttpContextAccessor?.HttpContext?.Request?.Path,
+            HttpReferrer = HttpContextAccessor?.HttpContext?.Request?.Headers["Referer"]
         };
 
-        if (HttpContextAccessor?.HttpContext?.Connection?.RemoteIpAddress != null)
-            log.RemoteIP = HttpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
-
-        if (HttpContextAccessor?.HttpContext?.User?.Identity != null)
-            log.Username = HttpContextAccessor.HttpContext.User.Identity.Name;
-
-        if (HttpContextAccessor?.HttpContext?.Request != null)
-        {
-            log.RequestPath = HttpContextAccessor.HttpContext.Request.Path;
-            log.HttpReferrer = HttpContextAccessor.HttpContext.Request.Headers["Referer"];
-        }
-
-        log.Message = message;
-
-        log.Exceptions = GetExceptions(exception: exception);
-        log.Parameters = GetParameters(parameters: parameters);
-        LogByFavoriteLibrary(log: log, exception: exception);
+        LogByFavoriteLibrary(log, exception);
         Thread.CurrentThread.CurrentCulture = currentCultureInfo;
     }
 
-    protected abstract void LogByFavoriteLibrary(Log log, Exception exception);
+    protected abstract void LogByFavoriteLibrary(Log log, Exception? exception);
 
-    public void LogTrace(string message, System.Collections.Hashtable parameters = null)
+    public void LogInLevel(LogLevel level, string? message = null, Hashtable? parameters = null, Exception? exception = null)
     {
-        System.Diagnostics.StackTrace stackTrace = new System.Diagnostics.StackTrace();
-        System.Reflection.MethodBase methodBase = stackTrace.GetFrame(1).GetMethod();
-        Log(methodBase: methodBase, level: LogLevel.Trace, message: message, exception: null, parameters: parameters);
+        StackTrace stackTrace = new();
+        MethodBase? methodBase = stackTrace?.GetFrame(1)?.GetMethod() ?? default(MethodBase);
+        Log(level, methodBase, message, exception, parameters);
     }
 
-    public void LogDebug(string message, System.Collections.Hashtable parameters = null)
-    {
-        System.Diagnostics.StackTrace stackTrace = new System.Diagnostics.StackTrace();
-        System.Reflection.MethodBase methodBase = stackTrace.GetFrame(1).GetMethod();
-        Log(methodBase: methodBase, level: LogLevel.Debug, message: message, exception: null, parameters: parameters);
-    }
-
-    public void LogInformation(string message, System.Collections.Hashtable parameters = null)
-    {
-        System.Diagnostics.StackTrace stackTrace = new System.Diagnostics.StackTrace();
-        System.Reflection.MethodBase methodBase = stackTrace.GetFrame(1).GetMethod();
-        Log(methodBase: methodBase, level: LogLevel.Information, message: message, exception: null, parameters: parameters);
-    }
-
-    public void LogWarning
-        (string message, System.Collections.Hashtable parameters = null)
-    {
-        System.Diagnostics.StackTrace stackTrace = new System.Diagnostics.StackTrace();
-        System.Reflection.MethodBase methodBase = stackTrace.GetFrame(1).GetMethod();
-        Log(methodBase: methodBase, level: LogLevel.Warning, message: message, exception: null, parameters: parameters);
-    }
-
-    public void LogError(Exception exception = null, string message = null, System.Collections.Hashtable parameters = null)
-    {
-        System.Diagnostics.StackTrace stackTrace = new System.Diagnostics.StackTrace();
-        System.Reflection.MethodBase methodBase = stackTrace.GetFrame(1).GetMethod();
-        Log(methodBase: methodBase, level: LogLevel.Error, message: message, exception: exception, parameters: parameters);
-    }
-
-    public void LogCritical(Exception exception = null, string message = null, System.Collections.Hashtable parameters = null)
-    {
-        System.Diagnostics.StackTrace stackTrace = new System.Diagnostics.StackTrace();
-        System.Reflection.MethodBase methodBase = stackTrace.GetFrame(1).GetMethod();
-        Log(methodBase: methodBase, level: LogLevel.Critical, message: message, exception: exception, parameters: parameters);
-    }
+    public void LogTrace(string message, Hashtable? parameters) => LogInLevel(LogLevel.Trace, message, parameters);
+    public void LogDebug(string message, Hashtable? parameters) => LogInLevel(LogLevel.Debug, message, parameters);
+    public void LogInformation(string message, Hashtable? parameters) => LogInLevel(LogLevel.Information, message, parameters);
+    public void LogWarning(string message, Hashtable? parameters) => LogInLevel(LogLevel.Warning, message, parameters);
+    public void LogError(Exception? exception = null, string? message = null, Hashtable? parameters = null) => LogInLevel(LogLevel.Error, message, parameters, exception);
+    public void LogCritical(Exception? exception = null, string? message = null, Hashtable? parameters = null) => LogInLevel(LogLevel.Critical, message, parameters, exception);
 }
