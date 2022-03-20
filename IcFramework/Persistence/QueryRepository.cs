@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IcFramework.Persistence;
 
-public abstract class QueryRepository<TEntity> :
-    object, IQueryRepository<TEntity> where TEntity : class, IEntity
+public abstract class QueryRepository<TEntity> : IQueryRepository<TEntity> 
+    where TEntity : class, IEntity
 {
     protected QueryRepository(DbContext databaseContext)
     {
@@ -16,11 +16,7 @@ public abstract class QueryRepository<TEntity> :
 
     protected DbContext DatabaseContext { get; }
 
-    public virtual async Task<TEntity> GetByIdAsync(Guid id) => await DbSet.FindAsync(id);
+    public virtual async Task<TEntity?> GetByIdAsync(long id) => await DbSet.FindAsync(id);
 
-    public virtual async Task<IList<TEntity>> GetAllAsync()
-    {
-        List<TEntity>? result = await DbSet.ToListAsync();
-        return result;
-    }
+    public virtual async Task<IList<TEntity>> GetAllAsync() => await DbSet.ToListAsync();
 }

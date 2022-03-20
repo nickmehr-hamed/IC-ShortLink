@@ -1,9 +1,8 @@
-﻿namespace IcFramework.Mediator
+﻿namespace IcFramework.Mediator;
+
+public class Query<TValue> :MediatR.IRequest<FluentResults.Result<TValue>>
 {
-    public class Query<TValue> :MediatR.IRequest<FluentResults.Result<TValue>>
+    public Query() : base()
     {
-        public Query() : base()
-        {
-        }
     }
 }

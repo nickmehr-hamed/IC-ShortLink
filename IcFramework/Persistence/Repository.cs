@@ -17,31 +17,28 @@ public abstract class Repository<T> : IRepository<T> where T : class, IEntity
     public virtual async Task InsertAsync(T entity)
     {
         if (entity == null)
-            throw new ArgumentNullException(paramName: nameof(entity));
+            throw new ArgumentNullException( nameof(entity));
         await DbSet.AddAsync(entity);
     }
-
     protected virtual void Update(T entity)
     {
         if (entity is null)
             throw new ArgumentNullException(nameof(entity));
         DbSet.Update(entity);
     }
-
     public virtual async Task UpdateAsync(T entity) => await Task.Run(() => { DbSet.Update(entity); });
-
-    public virtual async Task DeleteAsync(T entity)
+        public virtual async Task DeleteAsync(T entity)
     {
         if (entity == null)
             throw new ArgumentNullException(paramName: nameof(entity));
         await Task.Run(() => { DbSet.Remove(entity); });
     }
 
-    public virtual async Task<T> GetByIdAsync(Guid id) => await DbSet.FindAsync(keyValues: id);
+    public virtual async Task<T?> GetByIdAsync(long id) => await DbSet.FindAsync(keyValues: id);
 
-    public virtual async Task<bool> DeleteByIdAsync(Guid id)
+    public virtual async Task<bool> DeleteByIdAsync(long id)
     {
-        T entity = await GetByIdAsync(id);
+        T? entity = await GetByIdAsync(id);
         if (entity == null)
             return false;
         await DeleteAsync(entity);

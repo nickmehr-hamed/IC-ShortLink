@@ -24,9 +24,9 @@ public class RestApi : IDisposable
         return this;
     }
 
-    public async Task<T> GetAsync<T>()
+    public async Task<T?> GetAsync<T>()
     {
-        T result = default(T);
+        T? result = default(T);
         HttpResponseMessage response = await Client.GetAsync(Parameters);
         if (response.IsSuccessStatusCode)
         {

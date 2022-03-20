@@ -9,6 +9,7 @@ public abstract class UnitOfWork<T> :
 
     public async Task SaveAsync()
     {
+        _ = DatabaseContext ?? throw new ArgumentNullException(nameof(DatabaseContext));
         await DatabaseContext.SaveChangesAsync();
     }
 }

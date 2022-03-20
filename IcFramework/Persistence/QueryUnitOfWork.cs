@@ -5,55 +5,28 @@ namespace IcFramework.Persistence;
 
 public abstract class QueryUnitOfWork<T> : IQueryUnitOfWork where T : DbContext
 {
-    public QueryUnitOfWork(Options options) : base() => Options = options;
-
-    protected Options Options { get; set; }
-    private T _databaseContext;
-    protected T DatabaseContext
+    public QueryUnitOfWork(Options options) : base()
     {
-        get
+        Options = options;
+        if (Options.Provider == Provider.InMemory && options.InMemoryDatabaseName == null)
+            throw new ArgumentNullException(nameof(options.InMemoryDatabaseName));
+        if (Options.Provider != Provider.InMemory && options.ConnectionString == null)
+            throw new ArgumentNullException(nameof(options.ConnectionString));
+        DbContextOptionsBuilder<T>? optionsBuilder = Options.Provider switch
         {
-            if (_databaseContext == null)
-            {
-                DbContextOptionsBuilder<T>? optionsBuilder = new DbContextOptionsBuilder<T>();
-
-                switch (Options.Provider)
-                {
-                    case Provider.SqlServer:
-                        {
-                            optionsBuilder.UseSqlServer(connectionString: Options.ConnectionString);
-                            break;
-                        }
-                    case Provider.MySql:
-                        {
-                            //optionsBuilder.UseMySql(connectionString: Options.ConnectionString);
-                            break;
-                        }
-                    case Provider.Oracle:
-                        {
-                            //optionsBuilder.UseOracle(connectionString: Options.ConnectionString);
-                            break;
-                        }
-                    case Provider.PostgreSQL:
-                        {
-                            //optionsBuilder.UsePostgreSQL(connectionString: Options.ConnectionString);
-                            break;
-                        }
-                    case Provider.InMemory:
-                        {
-                            optionsBuilder.UseInMemoryDatabase(databaseName: Options.InMemoryDatabaseName);
-                            break;
-                        }
-                    default:
-                        {
-                            break;
-                        }
-                }
-                _databaseContext = (T)Activator.CreateInstance(type: typeof(T), args: optionsBuilder.Options);
-            }
-            return _databaseContext;
-        }
+            Provider.SqlServer => new DbContextOptionsBuilder<T>().UseSqlServer(Options.ConnectionString ?? ""),
+            //Provider.MySql => new DbContextOptionsBuilder<T>().UseMySql(Options.ConnectionString ?? ""),
+            //Provider.PostgreSQL => new DbContextOptionsBuilder<T>().UseOracle(Options.ConnectionString ?? ""),
+            //Provider.Oracle => new DbContextOptionsBuilder<T>().UsePostgreSQL(Options.ConnectionString ?? ""),
+            Provider.InMemory => new DbContextOptionsBuilder<T>().UseInMemoryDatabase(Options.InMemoryDatabaseName ?? ""),
+            _ => throw new NotImplementedException(),
+        };
+        _databaseContext = (T)Activator.CreateInstance(typeof(string), optionsBuilder.Options);
     }
+
+    private T? _databaseContext;
+    protected Options Options { get; private set; }
+    protected T? DatabaseContext { get => _databaseContext; }
     public bool IsDisposed { get; protected set; }
     public void Dispose()
     {
