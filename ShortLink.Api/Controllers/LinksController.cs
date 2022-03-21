@@ -22,7 +22,7 @@ public class LinksController : Infrastructure.ControllerBase
         FluentResults.Result<string>? result = await Mediator.Send(request);
         return FluentResult(result: result);
     }
-    #endregion /Post (Create New ShortLink)
+    #endregion 
 
     #region Get (Get A ShortLink Url and Title By Short Key)
     /// <summary>
@@ -37,5 +37,20 @@ public class LinksController : Infrastructure.ControllerBase
         FluentResults.Result<Persistence.Links.ViewModels.GetLinkByKeyQueryResponseViewModel>? result = await Mediator.Send(request);
         return FluentResult(result: result);
     }
-    #endregion /Get (Get A ShortLink Url and Title By Short Key)
+    #endregion
+
+    #region GetAll (Get All ShortLinks and owners)
+    /// <summary>
+    /// gets no parameters and return all links info
+    /// </summary>
+    [HttpGet(template: "")]
+    [ProducesResponseType(type: typeof(FluentResults.Result<IEnumerable< Persistence.Links.ViewModels.GetAllLinkInfoQueryResponseViewModel>>), statusCode: StatusCodes.Status200OK)]
+    [ProducesResponseType(type: typeof(FluentResults.Result), statusCode: StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Get()
+    {
+        Application.Links.Queries.GetAllLinkInfoQuery request = new();
+        FluentResults.Result<IEnumerable<Persistence.Links.ViewModels.GetAllLinkInfoQueryResponseViewModel>> result = await Mediator.Send(request);
+        return FluentResult(result: result);
+    }
+    #endregion
 }

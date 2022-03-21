@@ -8,6 +8,21 @@ public class LinkQueryRepository : IcFramework.Persistence.QueryRepository<Domai
     {
     }
 
+    public IEnumerable<GetAllLinkInfoQueryResponseViewModel> GetAllLinkInfo()
+    {
+        var result = DbSet.Select(link => new GetAllLinkInfoQueryResponseViewModel
+        {
+            Id = link.Id,
+            Title = link.Title,
+            Url = link.Url,
+            ShortKey = link.ShortKey,
+            OwnerTitle = link.Owner.Title,
+            UsageCount = link.UsageLogs.Count()
+        });
+        return result;
+    }
+    public async Task<IEnumerable<GetAllLinkInfoQueryResponseViewModel>> GetAllLinkInfoAsync() => await Task.Run(() => GetAllLinkInfo());
+
     public GetLinkByKeyQueryResponseViewModel? GetLinkByKey(string key)
     {
         Domain.Models.Link? link = DbSet.FirstOrDefault(current => current.ShortKey == key);

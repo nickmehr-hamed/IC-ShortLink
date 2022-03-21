@@ -18,4 +18,8 @@ public class Link : Base.Entity
     [Required]
     [MaxLength(length: 10)]
     public string ShortKey { get; set; }
+
+    public Owner Owner { get; set; }
+
+    public ICollection<UsageLog> UsageLogs { get; set; }
 }

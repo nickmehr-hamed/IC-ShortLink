@@ -4,4 +4,6 @@ public interface ILinkQueryRepository : IcFramework.Persistence.IQueryRepository
 {
     Task<ViewModels.GetLinkByKeyQueryResponseViewModel?> GetLinkByKeyAsync(string key);
     ViewModels.GetLinkByKeyQueryResponseViewModel? GetLinkByKey(string key);
+    Task<IEnumerable< ViewModels.GetAllLinkInfoQueryResponseViewModel>> GetAllLinkInfoAsync();
+    IEnumerable<ViewModels.GetAllLinkInfoQueryResponseViewModel> GetAllLinkInfo();
 }
