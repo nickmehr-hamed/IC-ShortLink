@@ -1,5 +1,7 @@
 ﻿using FluentResults;
+using IcFramework.Persistence;
 using ShortLink.Application.Links.Queries;
+using ShortLink.Domain.Models;
 using ShortLink.Persistence.Links.ViewModels;
 
 namespace ShortLink.Application.Links.QueryHandlers;

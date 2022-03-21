@@ -8,12 +8,5 @@ public class QueryUnitOfWork : IcFramework.Persistence.QueryUnitOfWork<QueryData
 
     private Links.Repositories.ILinkQueryRepository _links;
 
-    public Links.Repositories.ILinkQueryRepository Links
-    {
-        get
-        {
-            _links = _links ?? new Links.Repositories.LinkQueryRepository(DatabaseContext);
-            return _links;
-        }
-    }
+    public Links.Repositories.ILinkQueryRepository Links => _links ??= new Links.Repositories.LinkQueryRepository(DatabaseContext);
 }

@@ -1,4 +1,6 @@
-﻿namespace ShortLink.Persistence;
+﻿using IcFramework.Persistence;
+
+namespace ShortLink.Persistence;
 
 public interface IUnitOfWork : IcFramework.Persistence.IUnitOfWork
 {

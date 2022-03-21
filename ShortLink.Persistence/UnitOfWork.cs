@@ -8,12 +8,5 @@ public class UnitOfWork : IcFramework.Persistence.UnitOfWork<DatabaseContext>, I
 
     private Links.Repositories.ILinkRepository _links;
 
-    public Links.Repositories.ILinkRepository Links
-    {
-        get
-        {
-            _links = _links ?? new Links.Repositories.LinkRepository(DatabaseContext);
-            return _links;
-        }
-    }
+    public Links.Repositories.ILinkRepository Links => _links ??= new Links.Repositories.LinkRepository(DatabaseContext);
 }
