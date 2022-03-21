@@ -1,4 +1,6 @@
-﻿namespace ShortLink.Api.Infrastructure;
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace ShortLink.Api.Infrastructure;
 
 public abstract class ControllerBase : Microsoft.AspNetCore.Mvc.ControllerBase
 {
@@ -6,6 +8,6 @@ public abstract class ControllerBase : Microsoft.AspNetCore.Mvc.ControllerBase
 
     protected MediatR.IMediator Mediator { get; }
 
-    protected Microsoft.AspNetCore.Mvc.IActionResult
-        FluentResult<T>(FluentResults.Result<T> result) => result.IsSuccess ? Ok(value: result) : BadRequest(error: result.ToResult());
+    protected IActionResult FluentResult<T>(FluentResults.Result<T> result) 
+        => result.IsSuccess ? Ok(value: result) : BadRequest(error: result.ToResult());
 }

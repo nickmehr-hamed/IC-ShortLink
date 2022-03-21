@@ -11,7 +11,7 @@ internal static class Utility
         FluentResults.Result<TValue> result = new FluentResults.Result<TValue>();
         FluentValidation.Results.ValidationResult validationResult = await validator.ValidateAsync(instance: command);
 
-        if (validationResult.IsValid == false)
+        if (!validationResult.IsValid)
             foreach (FluentValidation.Results.ValidationFailure? error in validationResult.Errors)
                 result.WithError(errorMessage: error.ErrorMessage);
         return result;

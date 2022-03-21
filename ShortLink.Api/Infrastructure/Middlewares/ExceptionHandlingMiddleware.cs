@@ -1,4 +1,7 @@
-﻿namespace ShortLink.Api.Infrastructure.Middlewares;
+﻿using System.Net;
+using System.Text.Json;
+
+namespace ShortLink.Api.Infrastructure.Middlewares;
 
 public class ExceptionHandlingMiddleware : object
 {
@@ -21,11 +24,11 @@ public class ExceptionHandlingMiddleware : object
     private static Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
         FluentResults.Result result = new FluentResults.Result();
-        FluentValidation.ValidationException validationException = exception as FluentValidation.ValidationException;
+        FluentValidation.ValidationException? validationException = exception as FluentValidation.ValidationException;
 
         if (validationException != null)
         {
-            System.Net.HttpStatusCode code = System.Net.HttpStatusCode.BadRequest;
+            HttpStatusCode code = HttpStatusCode.BadRequest;
             context.Response.StatusCode = (int)code;
             context.Response.ContentType = "application/json";
             foreach (FluentValidation.Results.ValidationFailure? error in validationException.Errors)
@@ -33,19 +36,19 @@ public class ExceptionHandlingMiddleware : object
         }
         else
         {
-            System.Net.HttpStatusCode code = System.Net.HttpStatusCode.InternalServerError;
+            HttpStatusCode code = HttpStatusCode.InternalServerError;
             context.Response.StatusCode = (int)code;
             context.Response.ContentType = "application/json";
             result.WithError("Internal Server Error!");
         }
 
-        System.Text.Json.JsonSerializerOptions? options = new System.Text.Json.JsonSerializerOptions
+        JsonSerializerOptions? options = new ()
         {
             IncludeFields = true,
-            PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         };
 
-        string resultString = System.Text.Json.JsonSerializer.Serialize(value: result, options: options);
+        string resultString = JsonSerializer.Serialize(value: result, options: options);
         return context.Response.WriteAsync(resultString);
     }
 }

@@ -1,5 +1,4 @@
 ﻿using FluentResults;
-using ShortLink.Application.Links.CommandHandlers;
 using ShortLink.Application.Links.Queries;
 using ShortLink.Persistence.Links.ViewModels;
 
@@ -23,11 +22,12 @@ public class GetLinkByKeyQueryHandler : IcFramework.Mediator.IRequestHandler<Get
 
     public async Task<Result<GetLinkByKeyQueryResponseViewModel>> Handle(GetLinkByKeyQuery request, CancellationToken cancellationToken)
     {
-        FluentResults.Result<Persistence.Links.ViewModels.GetLinkByKeyQueryResponseViewModel>? result = new();
+        Result<GetLinkByKeyQueryResponseViewModel>? result = new();
         try
         {
-            Persistence.Links.ViewModels.GetLinkByKeyQueryResponseViewModel? link = await UnitOfWork.Links.GetLinkByKeyAsync(request.Key);
-            result.WithValue(value: link);
+            GetLinkByKeyQueryResponseViewModel? link = await UnitOfWork.Links.GetLinkByKeyAsync(request.Key);
+            if (link != null)
+                result.WithValue(link);
         }
         catch (Exception ex)
         {

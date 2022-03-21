@@ -21,7 +21,7 @@ public abstract class QueryUnitOfWork<T> : IQueryUnitOfWork where T : DbContext
             Provider.InMemory => new DbContextOptionsBuilder<T>().UseInMemoryDatabase(Options.InMemoryDatabaseName ?? ""),
             _ => throw new NotImplementedException(),
         };
-        _databaseContext = (T)Activator.CreateInstance(typeof(string), optionsBuilder.Options);
+        _databaseContext = (T)Activator.CreateInstance(typeof(T), optionsBuilder.Options);
     }
 
     private T? _databaseContext;
