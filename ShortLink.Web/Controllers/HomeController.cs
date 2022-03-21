@@ -9,7 +9,6 @@ public class HomeController : Controller
     public string BaseUrl { get; }
     public HomeController(IConfiguration configuration) => BaseUrl = configuration["BaseUrl"];
 
-
     public IActionResult Index(string key)
     {
         if (string.IsNullOrWhiteSpace(key))
