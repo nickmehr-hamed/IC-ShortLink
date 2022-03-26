@@ -8,7 +8,7 @@ public class Options
     {
     }
 
-    public Provider Provider { get; set; }
-    public string? ConnectionString { get; set; }
-    public string? InMemoryDatabaseName { get; set; }
+    public Provider Provider { get; init; }
+    public string? ConnectionString { get; init; }
+    public string? InMemoryDatabaseName { get; init; }
 }

@@ -5,7 +5,7 @@ namespace IcFramework.Persistence;
 
 public abstract class Repository<T> : IRepository<T> where T : class, IEntity
 {
-    protected internal Repository(DbContext databaseContext) : base()
+    protected internal Repository(in DbContext databaseContext) : base()
     {
         DatabaseContext = databaseContext ?? throw new ArgumentNullException(paramName: nameof(databaseContext));
         DbSet = DatabaseContext.Set<T>();

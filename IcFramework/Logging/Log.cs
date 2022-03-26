@@ -8,34 +8,33 @@ public class Log : object, ILog
     {
     }
 
-    public LogLevel Level { get; set; }
-    public string? Namespace { get; set; }
-    public string? ClassName { get; set; }
-    public string? MethodName { get; set; }
-    public string? RemoteIP { get; set; }
-    public string? Username { get; set; }
-    public string? RequestPath { get; set; }
-    public string? HttpReferrer { get; set; }
-    public string? Message { get; set; }
-    public string? Parameters { get; set; }
-    public string? Exceptions { get; set; }
+    public LogLevel Level { get; init; }
+    public string? Namespace { get; init; }
+    public string? ClassName { get; init; }
+    public string? MethodName { get; init; }
+    public string? RemoteIP { get; init; }
+    public string? Username { get; init; }
+    public string? RequestPath { get; init; }
+    public string? HttpReferrer { get; init; }
+    public string? Message { get; init; }
+    public string? Parameters { get; init; }
+    public string? Exceptions { get; init; }
 
     public override string ToString()
     {
-        string MakeTag(string? value, string name)
-        => $"<{ name }>{(string.IsNullOrWhiteSpace(value) ? "NULL" : value)}</{ name }>";
+        static string makeTag(string? value, string name) => $"<{ name }>{(string.IsNullOrWhiteSpace(value) ? "NULL" : value)}</{ name }>";
 
         StringBuilder stringBuilder = new();
-        stringBuilder.Append(MakeTag(Level.ToString(), nameof(Level)));
-        stringBuilder.Append(MakeTag(Namespace, nameof(Namespace)));
-        stringBuilder.Append(MakeTag(ClassName, nameof(ClassName)));
-        stringBuilder.Append(MakeTag(MethodName, nameof(MethodName)));
-        stringBuilder.Append(MakeTag(RemoteIP, nameof(RemoteIP)));
-        stringBuilder.Append(MakeTag(HttpReferrer, nameof(HttpReferrer)));
-        stringBuilder.Append(MakeTag(Username, nameof(Username)));
-        stringBuilder.Append(MakeTag(Message, nameof(Message)));
-        stringBuilder.Append(MakeTag(Exceptions, nameof(Exceptions)));
-        stringBuilder.Append(MakeTag(Parameters, nameof(Parameters)));
+        stringBuilder.Append(makeTag(Level.ToString(), nameof(Level)));
+        stringBuilder.Append(makeTag(Namespace, nameof(Namespace)));
+        stringBuilder.Append(makeTag(ClassName, nameof(ClassName)));
+        stringBuilder.Append(makeTag(MethodName, nameof(MethodName)));
+        stringBuilder.Append(makeTag(RemoteIP, nameof(RemoteIP)));
+        stringBuilder.Append(makeTag(HttpReferrer, nameof(HttpReferrer)));
+        stringBuilder.Append(makeTag(Username, nameof(Username)));
+        stringBuilder.Append(makeTag(Message, nameof(Message)));
+        stringBuilder.Append(makeTag(Exceptions, nameof(Exceptions)));
+        stringBuilder.Append(makeTag(Parameters, nameof(Parameters)));
         string result = stringBuilder.ToString();
         return result;
     }

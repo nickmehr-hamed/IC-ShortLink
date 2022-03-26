@@ -1,12 +1,14 @@
-﻿namespace IcFramework.Logging;
+﻿using Microsoft.AspNetCore.Http;
+
+namespace IcFramework.Logging;
 
 public class NLogAdapter<T> : Logger<T> where T : class
 {
-    public NLogAdapter(Microsoft.AspNetCore.Http.IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
+    public NLogAdapter(IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
     {
     }
 
-    protected override void LogByFavoriteLibrary(Log log, Exception? exception)
+    protected override void LogByFavoriteLibrary(in Log log, in Exception? exception)
     {
         string loggerMessage = log.ToString();
         NLog.Logger logger = NLog.LogManager.GetLogger(name: typeof(T).ToString());

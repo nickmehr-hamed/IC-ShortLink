@@ -5,13 +5,13 @@ namespace IcFramework.Persistence;
 
 public abstract class QueryUnitOfWork<T> : IQueryUnitOfWork where T : DbContext
 {
-    public QueryUnitOfWork(Options options) : base()
+    public QueryUnitOfWork(in Options options) : base()
     {
         Options = options;
         if (Options.Provider == Provider.InMemory && options.InMemoryDatabaseName == null)
-            throw new ArgumentNullException(nameof(options.InMemoryDatabaseName));
+            throw new (nameof(options.InMemoryDatabaseName));
         if (Options.Provider != Provider.InMemory && options.ConnectionString == null)
-            throw new ArgumentNullException(nameof(options.ConnectionString));
+            throw new (nameof(options.ConnectionString));
         DbContextOptionsBuilder<T>? optionsBuilder = Options.Provider switch
         {
             Provider.SqlServer => new DbContextOptionsBuilder<T>().UseSqlServer(Options.ConnectionString ?? ""),
@@ -21,7 +21,7 @@ public abstract class QueryUnitOfWork<T> : IQueryUnitOfWork where T : DbContext
             Provider.InMemory => new DbContextOptionsBuilder<T>().UseInMemoryDatabase(Options.InMemoryDatabaseName ?? ""),
             _ => throw new NotImplementedException(),
         };
-        _databaseContext = (T)Activator.CreateInstance(typeof(T), optionsBuilder.Options);
+        _databaseContext = (T?)Activator.CreateInstance(typeof(T), optionsBuilder.Options);
     }
 
     private T? _databaseContext;

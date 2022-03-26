@@ -2,15 +2,15 @@
 
 public interface ILog
 {
-    LogLevel Level { get; set; }
-    string? Namespace { get; set; }
-    string? ClassName { get; set; }
-    string? MethodName { get; set; }
-    string? RemoteIP { get; set; }
-    string? Username { get; set; }
-    string? RequestPath { get; set; }
-    string? HttpReferrer { get; set; }
-    string? Message { get; set; }
-    string? Parameters { get; set; }
-    string? Exceptions { get; set; }
+    LogLevel Level { get; init; }
+    string? Namespace { get; init; }
+    string? ClassName { get; init; }
+    string? MethodName { get; init; }
+    string? RemoteIP { get; init; }
+    string? Username { get; init; }
+    string? RequestPath { get; init; }
+    string? HttpReferrer { get; init; }
+    string? Message { get; init; }
+    string? Parameters { get; init; }
+    string? Exceptions { get; init; }
 }
